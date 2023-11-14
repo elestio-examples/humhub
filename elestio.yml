@@ -44,12 +44,6 @@ environments:
     value: "random_password"
   - key: "HUMHUB_REDIS_PASSWORD"
     value: "random_password"
-  - key: "HUMHUB_MAILER_SYSTEM_EMAIL_ADDRESS"
-    value: "[DOMAIN]@vm.elestio.app"
-  - key: "HUMHUB_MAILER_HOSTNAME"
-    value: "172.17.0.1"
-  - key: "HUMHUB_MAILER_PORT"
-    value: "25"
 
 config:
   runTime: "dockerCompose"
