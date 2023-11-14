@@ -2,7 +2,14 @@
 set -o allexport; source .env; set +o allexport;
 
 mkdir -p ./storage/uploads
+mkdir -p ./storage/assets
+mkdir -p ./storage/modules
+mkdir -p ./storage/themes
+
 chown -R 1000:1000 ./storage/uploads
+chown -R 1000:1000 ./storage/assets
+chown -R 1000:1000 ./storage/modules
+chown -R 1000:1000 ./storage/themes
 
 cat /opt/elestio/startPostfix.sh > post.txt
 filename="./post.txt"
