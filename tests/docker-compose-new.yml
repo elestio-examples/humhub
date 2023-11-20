@@ -1,0 +1,77 @@
+version: "3.3"
+services:
+  humhub:
+    image: elestio4test/humhub:latest
+    restart: always
+    ports:
+      - "172.17.0.1:64869:80"
+    environment:
+      HUMHUB_ADMIN_LOGIN: admin
+      HUMHUB_ADMIN_EMAIL: ${ADMIN_EMAIL}
+      HUMHUB_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      HUMHUB_DB_USER: ${HUMHUB_DB_USER}
+      HUMHUB_DB_PASSWORD: ${HUMHUB_DB_PASSWORD}
+      HUMHUB_DB_HOST: "db"
+      HUMHUB_DB_NAME: "humhub"
+      HUMHUB_AUTO_INSTALL: 1
+      HUMHUB_DEBUG: 1
+      HUMHUB_PROTO: "https"
+      HUMHUB_HOST: ${DOMAIN}
+      # Mailer install setup
+      HUMHUB_MAILER_SYSTEM_EMAIL_ADDRESS: ${HUMHUB_MAILER_SYSTEM_EMAIL_ADDRESS}
+      HUMHUB_MAILER_SYSTEM_EMAIL_NAME: "HumHub"
+      HUMHUB_MAILER_TRANSPORT_TYPE: "smtp"
+      HUMHUB_MAILER_HOSTNAME: ${HUMHUB_MAILER_HOSTNAME}
+      HUMHUB_MAILER_PORT: ${HUMHUB_MAILER_PORT}
+      HUMHUB_MAILER_USERNAME: ${HUMHUB_MAILER_USERNAME}
+      HUMHUB_MAILER_PASSWORD: ${HUMHUB_MAILER_PASSWORD}
+      #HUMHUB_MAILER_ENCRYPTION:
+      HUMHUB_MAILER_ALLOW_SELF_SIGNED_CERTS: 0
+      # Cache Config
+      HUMHUB_CACHE_EXPIRE_TIME: 3600
+      HUMHUB_CACHE_CLASS: yii\redis\Cache
+      HUMHUB_QUEUE_CLASS: humhub\modules\queue\driver\Redis
+      HUMHUB_REDIS_HOSTNAME: redis
+      HUMHUB_REDIS_PORT: 6379
+      HUMHUB_REDIS_PASSWORD: ${HUMHUB_REDIS_PASSWORD}
+    volumes:
+      - "./storage/config:/var/www/localhost/htdocs/protected/config"
+
+  db:
+    image: elestio/mariadb:10.4
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MYSQL_DATABASE: "humhub"
+      MYSQL_USER: ${HUMHUB_DB_USER}
+      MYSQL_PASSWORD: ${HUMHUB_DB_PASSWORD}
+    volumes:
+      - "./storage/mysql:/var/lib/mysql"
+    ports:
+      - 172.17.0.1:35011:3306
+  redis:
+    image: elestio/redis:7.0
+    restart: always
+    expose:
+      - "6379"
+    volumes:
+      - ./storage/redis:/data
+    command: --requirepass ${HUMHUB_REDIS_PASSWORD}
+
+  pma:
+    image: elestio/phpmyadmin:latest
+    restart: always
+    links:
+      - db:db
+    ports:
+      - "172.17.0.1:33682:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: humhub
+      PMA_PASSWORD: ${ADMIN_PASSWORD}
+      UPLOAD_LIMIT: 500M
+      MYSQL_USERNAME: humhub
+      MYSQL_ROOT_PASSWORD: ${ADMIN_PASSWORD}
+    depends_on:
+      - db
