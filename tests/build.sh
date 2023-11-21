@@ -8,5 +8,4 @@ VCS_REF="$(git rev-parse --short HEAD)"
 
 sed -i 's/ARG HUMHUB_VERSION/ARG HUMHUB_VERSION='"${HUMHUB_VERSION}"'/g' Dockerfile
 sed -i 's/ARG VCS_REF/ARG VCS_REF='"${VCS_REF}"'/g' Dockerfile
-
 docker buildx build . --output type=docker,name=elestio4test/humhub:latest | docker load
