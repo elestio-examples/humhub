@@ -7,7 +7,7 @@ sleep 60s;
 
 
 sed -i "s~DOMAIN_TO_CHANGE~${DOMAIN}~g" ./docker-compose.yml
-sed -i "s~172.17.0.1~${IP}~g" ./docker-compose.yml
+sed -i "s~0.0.0.0~${IP}~g" ./docker-compose.yml
 
 docker-compose down;
 docker-compose up -d;

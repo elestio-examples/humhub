@@ -6,7 +6,7 @@ services:
     ports:
       - "172.17.0.1:64869:80"
     extra_hosts:
-      - "DOMAIN_TO_CHANGE:172.17.0.1"
+      - "DOMAIN_TO_CHANGE:0.0.0.0"
     environment:
       HUMHUB_ADMIN_LOGIN: admin
       HUMHUB_ADMIN_EMAIL: ${ADMIN_EMAIL}
