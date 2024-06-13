@@ -46,6 +46,8 @@ environments:
     value: "random_password"
   - key: "HUMHUB_REDIS_PASSWORD"
     value: "random_password"
+  - key: "IP"
+    value: "[IP]"
 
 config:
   runTime: "dockerCompose"
