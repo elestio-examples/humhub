@@ -46,6 +46,10 @@ environments:
     value: "random_password"
   - key: "HUMHUB_REDIS_PASSWORD"
     value: "random_password"
+  - key: "HUMHUB_CACHE_CLASS"
+    value: "yii\redis\Cache"
+  - key: "HUMHUB_QUEUE_CLASS"
+    value: "humhub\modules\queue\driver\Redis"
 
 config:
   runTime: "dockerCompose"
