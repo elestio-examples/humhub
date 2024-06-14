@@ -16,7 +16,7 @@ services:
       HUMHUB_DB_HOST: "db"
       HUMHUB_DB_NAME: "humhub"
       HUMHUB_AUTO_INSTALL: 1
-      HUMHUB_DEBUG: 1
+      HUMHUB_DEBUG: false
       HUMHUB_PROTO: "https"
       HUMHUB_HOST: ${DOMAIN}
       # Mailer install setup
